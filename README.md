@@ -1,2 +1,2 @@
 # WEBServer
-a web server project in cpp for echole 42
+a web server project in cpp for echol 42
