@@ -1,0 +1,114 @@
+// Https : protocol for communication between client and webserver
+// ===================================================================
+
+// Cgi common gateway interface : standard for run script on the server and generating dynamic web content,
+// our server must forking and exec the cgi scripts, pass input and send the output to the cloent,
+// ====================================================================
+
+// poll:A system call used to monitor multiple file descriptors to see if I/O is possible.
+// Essential for building non-blocking, event-driven servers.
+// struct pollfd fds[1];
+// fds[0].fd = socket_fd;
+// fds[0].events = POLLIN;
+
+// int ret = poll(fds, 1, 1000); // waits up to 1000 ms
+// ==========================================================================
+
+// select()
+// Similar to poll(), monitors multiple sockets but has limits (e.g., FD_SETSIZE).
+
+// Uses fd_set and macros like FD_SET, FD_ZERO, etc.
+
+// Allowed as an alternative to poll().
+
+// ==============================================================
+
+// 5. curl
+// A command-line tool to test HTTP servers.
+
+// Example:
+
+// bash
+// Copy
+// Edit
+// curl -v http://localhost:8080/index.html
+// curl -X POST -F "file=@myfile.txt" http://localhost/upload
+// ================================================================
+// 6. telnet
+// A network protocol client used for manual HTTP testing.
+
+// You can simulate raw HTTP requests.
+
+// Example:
+
+// bash
+// Copy
+// Edit
+// telnet localhost 8080
+// Then type:
+
+// vbnet
+// Copy
+// Edit
+// GET / HTTP/1.1
+// Host: localhost
+// ===============================================================================
+// 7. fork()
+// Used to create a new process, typically for executing CGI scripts.
+
+// The child process can execve() a script, and the parent can collect the output.
+// =========================================================================
+// 8. execve()
+// Replaces the current process image with a new program.
+
+// Used to run CGI scripts in the forked process.
+// ===========================================================================================
+// 9. send() / recv()
+// Used to send or receive data over a socket.
+
+// These are wrappers over write()/read() optimized for sockets.
+// ===========================================================================================
+// 10. non-blocking I/O
+// Ensures server stays responsive by never waiting (blocking) for read/write.
+
+// Requires configuring file descriptors using fcntl() and monitoring with poll().
+// ===========================================================================================
+// 11. NGINX
+// A high-performance HTTP server often used as a reference.
+
+// You should compare your server behavior against it (headers, status codes, etc.).
+// ===========================================================================================
+// 12. Content-Length
+// HTTP header that specifies the size (in bytes) of the response body.
+
+// Must be accurate unless using chunked transfer encoding.
+// ===========================================================================================
+// 13. Chunked Transfer Encoding
+// A way of sending HTTP response in chunks when size is unknown ahead of time.
+
+// Each chunk is preceded by its size in hex.
+
+// Your server must unchunk the body for CGI.
+// ===========================================================================================
+// 14. Directory Listing
+// When a request points to a folder and no index file is defined, the server can return a list of files in that folder.
+
+// This must be configurable in your server.
+// ===========================================================================================
+// 15. HTTP Methods
+// GET: Retrieve a resource.
+
+// POST: Submit data (e.g., forms, uploads).
+
+// DELETE: Remove a resource.
+
+
+// | Action                  | FD Assigned |
+// | ----------------------- | ----------- |
+// | `stdin` (default)       | 0           |
+// | `stdout` (default)      | 1           |
+// | `stderr` (default)      | 2           |
+// | `socket()` for server   | 3           |
+// | `accept()` for client 1 | 4           |
+// | `accept()` for client 2 | 5           |
+// fd assi on terminal
